@@ -1,0 +1,33 @@
+services:
+  #  --------------------------------------------
+  mysql:
+    build:
+      context: ./MySQL
+      dockerfile: Dockerfile
+    container_name: mysql-db-adminer-jilmar
+    volumes:
+      - ./MySQL/mysql_data:/var/lib/mysql
+    ports:
+      - "4800:3306"
+    networks:
+      - app-network
+    healthcheck:
+      test: [ "CMD","mysql", "-u", "jilmitar-2", "-pjilmar*veloza" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+  #  --------------------------------------------
+  adminer:
+    image: adminer
+    container_name: adminer-jilmar
+    depends_on:
+      - mysql
+    ports:
+      - "9001:8080"
+    networks:
+      - app-network
+#  --------------------------------------------
+networks:
+  app-network:
+    driver: bridge
+    name: app-network

@@ -1,0 +1,23 @@
+service: serverless-jilmar
+frameworkVersion: '3'
+
+plugins:
+  - serverless-offline
+
+provider:
+  name: aws
+  runtime: python3.9
+
+functions:
+  fuction_one:
+    handler: handler.fuction_one
+    events:
+      - httpApi:
+          path: /one
+          method: get
+  fuction_two:
+    handler: handler.fuction_two
+    events:
+      - httpApi:
+          path: /two
+          method: get
